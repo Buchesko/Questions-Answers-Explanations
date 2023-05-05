@@ -1,0 +1,54 @@
+import json
+
+def create_json_file():
+    # Pobierz dane od użytkownika
+    title = input("Tytuł: ")
+    module_number = input("Numer modułu: ")
+
+    # Utwórz słownik pytań
+    questions = {}
+    while True:
+        question_id = input("Podaj identyfikator pytania (lub 'k' aby zakończyć): ")
+        if question_id == 'k':
+            break
+
+        # Pobierz dane od użytkownika dla pytania
+        question = input("Pytanie: ")
+        good_answer = input("Poprawna odpowiedź: ")
+        bad_answer_1 = input("Niepoprawna odpowiedź 1: ")
+        bad_answer_2 = input("Niepoprawna odpowiedź 2: ")
+        bad_answer_3 = input("Niepoprawna odpowiedź 3: ")
+        explanation = input("Wyjaśnienie: ")
+
+        # Utwórz słownik odpowiedzi i dodaj do słownika pytania
+        answers = {
+            "good": good_answer,
+            "bad1": bad_answer_1,
+            "bad2": bad_answer_2,
+            "bad3": bad_answer_3
+        }
+
+        # Utwórz słownik pytania i dodaj do słownika pytań
+        question_dict = {
+            "Question": question,
+            "Answers": answers,
+            "Explanations": {"Exp": explanation}
+        }
+        questions[question_id] = question_dict
+
+    # Utwórz słownik z całymi danymi
+    data = {
+        "Title": title,
+        "ModuleNumber": module_number,
+        "Questions": questions
+    }
+
+    # Zapisz do pliku JSON
+    file_name = input("Podaj nazwę pliku JSON (bez rozszerzenia): ")
+    file_path = file_name + ".json"
+    with open(file_path, 'w') as output_file:
+        json.dump(data, output_file, indent=4)
+        print("Plik '{}' został utworzony.".format(file_path))
+
+if __name__ == '__main__':
+    create_json_file()
